@@ -1,2 +1,42 @@
-<h1>Web.py Demo</h1>
-<p>Welcome</p>
+<h1>Aplicacion</h1>
+<table>
+    <th>Sensor</th>
+    <th>Sucursal 1</th>
+    <th>Sucursal 2</th>
+        <tr>
+            <td >temperatura</td>
+        <td id="sucursal1_temperatura">{{X}}</td>
+        <td id="sucursal2_temperatura">{{X}}</td>
+        
+    </tr>
+    <tr>
+        <td >humedad</td>
+        <td id="sucursal1_humedad">{{X}}</td>
+        <td id="sucursal2_humedad">{{X}}</td>
+        
+    </tr>
+    <tr>
+        <td >presion</td>
+        <td id="sucursal1_presion">null</td>
+        <td id="sucursal2_presion">{{X}}</td>
+        
+    </tr>
+</table>
+<script>
+    window.setInterval(function () {
+        var request = new XMLHttpRequest();
+        
+        request.open('GET', 'https://aplicacionprueba-20c16-default-rtdb.firebaseio.com/sucursales.json');
+        request.onload = () => {
+            const response  = request.responseText;
+            console.log(response);
+            const json = JSON.parse(response);
+            document.getElementById('sucursal1_temperatura').innerHTML = json["sucursal1"].temperatura;
+            document.getElementById('sucursal2_temperatura').innerHTML = json["sucursal2"].temperatura;
+            document.getElementById('sucursal1_humedad').innerHTML = json["sucursal1"].humedad;
+            document.getElementById('sucursal2_humedad').innerHTML = json["sucursal2"].humedad;
+            document.getElementById('sucursal2_presion').innerHTML = json["sucursal2"].presion;
+            };
+        request.send();
+    }, 1000);
+</script>
